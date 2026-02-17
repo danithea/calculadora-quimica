@@ -130,21 +130,13 @@ mostrarCampos();
 
 // Toggle tema claro/osuro
 toggleTemaBtn.onclick = () => {
-  const root = document.documentElement;
-  if(root.style.getPropertyValue('--bg-color') === '#0f172a'){
-    root.style.setProperty('--bg-color','#f5f5f5');
-    root.style.setProperty('--container-color','#ffffff');
-    root.style.setProperty('--text-color','#111827');
-    root.style.setProperty('--btn-color','#3b82f6');
-    root.style.setProperty('--btn-hover','#2563eb');
+  if(document.body.getAttribute("data-theme") === "claro"){
+    document.body.removeAttribute("data-theme"); // vuelve a oscuro
   } else {
-    root.style.setProperty('--bg-color','#0f172a');
-    root.style.setProperty('--container-color','#1e293b');
-    root.style.setProperty('--text-color','white');
-    root.style.setProperty('--btn-color','#22c55e');
-    root.style.setProperty('--btn-hover','#16a34a');
+    document.body.setAttribute("data-theme","claro"); // activa tema claro
   }
 };
+
 
 // Función principal
 function calcular() {
