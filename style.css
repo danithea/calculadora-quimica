@@ -23,25 +23,38 @@ body {
   box-shadow: 0 0 20px #0f172a;
 }
 
-h1,h2,h3 {
+h1, h2, h3 {
   text-align: center;
   margin-bottom: 15px;
 }
 
-select, input, button {
+/* Todos los inputs y selects tienen mismo ancho y estilo */
+input[type="number"], select {
   width: 100%;
-  padding: 10px;
+  padding: 12px 15px;
+  margin: 8px 0 15px 0;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  font-size: 16px;
+  box-sizing: border-box;
+  background-color: #f5f5f5;
+  color: #111827;
+}
+
+/* Botones igual de grandes que inputs y uniformes */
+button {
+  width: 100%;
+  padding: 12px 15px;
   margin: 8px 0 15px 0;
   border-radius: 8px;
   border: none;
-}
-
-button {
   background: var(--btn-color);
   color: var(--text-color);
   font-weight: bold;
+  font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
+  box-sizing: border-box;
 }
 
 button:hover {
@@ -60,4 +73,10 @@ li {
   margin: 5px 0;
   padding: 5px;
   border-bottom: 1px solid #334155;
+}
+
+canvas {
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: #f5f5f5;
 }

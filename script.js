@@ -40,7 +40,7 @@ function mostrarCampos() {
 
     case "dilucion":
       html = `
-        <label>Concentración inicial (C1):</label>
+        <label>Concentración inicial (C1 M):</label>
         <input type="number" id="C1">
         <label>Volumen inicial (V1 L o mL):</label>
         <input type="number" id="V1">
@@ -49,9 +49,9 @@ function mostrarCampos() {
           <option value="mL">mL</option>
         </select>
 
-        <label>Concentración final (C2) [Deja vacío si quieres calcular]:</label>
+        <label>Concentración final (C2 M) [opcional]:</label>
         <input type="number" id="C2">
-        <label>Volumen final (V2 L o mL) [Deja vacío si quieres calcular]:</label>
+        <label>Volumen final (V2 L o mL) [opcional]:</label>
         <input type="number" id="V2">
         <select id="unidadV2">
           <option value="L">L</option>
@@ -128,24 +128,25 @@ function mostrarCampos() {
 
 mostrarCampos();
 
-// Toggle tema
+// Toggle tema claro/osuro
 toggleTemaBtn.onclick = () => {
-  if(document.documentElement.style.getPropertyValue('--bg-color') === '#0f172a') {
-    document.documentElement.style.setProperty('--bg-color','#f5f5f5');
-    document.documentElement.style.setProperty('--container-color','#ffffff');
-    document.documentElement.style.setProperty('--text-color','#111827');
-    document.documentElement.style.setProperty('--btn-color','#3b82f6');
-    document.documentElement.style.setProperty('--btn-hover','#2563eb');
+  const root = document.documentElement;
+  if(root.style.getPropertyValue('--bg-color') === '#0f172a'){
+    root.style.setProperty('--bg-color','#f5f5f5');
+    root.style.setProperty('--container-color','#ffffff');
+    root.style.setProperty('--text-color','#111827');
+    root.style.setProperty('--btn-color','#3b82f6');
+    root.style.setProperty('--btn-hover','#2563eb');
   } else {
-    document.documentElement.style.setProperty('--bg-color','#0f172a');
-    document.documentElement.style.setProperty('--container-color','#1e293b');
-    document.documentElement.style.setProperty('--text-color','white');
-    document.documentElement.style.setProperty('--btn-color','#22c55e');
-    document.documentElement.style.setProperty('--btn-hover','#16a34a');
+    root.style.setProperty('--bg-color','#0f172a');
+    root.style.setProperty('--container-color','#1e293b');
+    root.style.setProperty('--text-color','white');
+    root.style.setProperty('--btn-color','#22c55e');
+    root.style.setProperty('--btn-hover','#16a34a');
   }
 };
 
-// Función principal de cálculo
+// Función principal
 function calcular() {
   let tipo = tipoCalc.value;
   let resultado = "";
@@ -156,9 +157,18 @@ function calcular() {
         let moles = parseFloat(document.getElementById("moles").value);
         let volumen = parseFloat(document.getElementById("volumen").value);
         let unidadVol = document.getElementById("unidadVol").value;
-        if(unidadVol === "mL") volumen /= 1000; // conversión a L
+        if(unidadVol === "mL") volumen /= 1000;
         if(!moles || !volumen) throw "Completa todos los campos";
         resultado = `Molaridad: ${(moles/volumen).toFixed(3)} M`;
+        break;
+
+      case "normalidad":
+        let eq = parseFloat(document.getElementById("equivalente").value);
+        let vol = parseFloat(document.getElementById("volumen").value);
+        let unidadVolN = document.getElementById("unidadVol").value;
+        if(unidadVolN==="mL") vol/=1000;
+        if(!eq || !vol) throw "Completa todos los campos";
+        resultado = `Normalidad: ${(eq/vol).toFixed(3)} N`;
         break;
 
       case "dilucion":
@@ -169,31 +179,69 @@ function calcular() {
         let C2 = parseFloat(document.getElementById("C2").value);
         let V2 = parseFloat(document.getElementById("V2").value);
         let unidadV2 = document.getElementById("unidadV2").value;
-        if(unidadV2==="mL" && V2) V2 /= 1000;
+        if(unidadV2==="mL" && V2) V2/=1000;
 
         if(C2 && !V2) resultado = `Volumen final: ${(C1*V1/C2).toFixed(3)} L`;
         else if(!C2 && V2) resultado = `Concentración final: ${(C1*V1/V2).toFixed(3)} M`;
-        else throw "Rellena solo C2 o V2";
+        else if(C2 && V2) resultado = `Verifica los valores, solo deja vacío C2 o V2`;
+        else throw "Completa al menos C2 o V2";
 
-        // Graficar
         crearGraficaDilucion(C1,V1,C2,V2);
         break;
 
-      // Otros cálculos aquí (normalidad, moles, masa, pureza, titulación)
-      // Puedes agregar conversiones como arriba
-      default:
-        resultado = "Funcionalidad en construcción...";
+      case "masa":
+        let molesM = parseFloat(document.getElementById("moles").value);
+        let masaMolar = parseFloat(document.getElementById("masaMolar").value);
+        let unidadMM = document.getElementById("unidadMasaMolar").value;
+        if(unidadMM==="mg") masaMolar/=1000;
+        if(!molesM || !masaMolar) throw "Completa todos los campos";
+        resultado = `Masa: ${(molesM*masaMolar).toFixed(3)} g`;
+        break;
+
+      case "moles":
+        let masa = parseFloat(document.getElementById("masa").value);
+        let masaMolar2 = parseFloat(document.getElementById("masaMolar").value);
+        let unidadM = document.getElementById("unidadMasa").value;
+        let unidadMM2 = document.getElementById("unidadMasaMolar").value;
+        if(unidadM==="mg") masa/=1000;
+        if(unidadMM2==="mg") masaMolar2/=1000;
+        if(!masa || !masaMolar2) throw "Completa todos los campos";
+        resultado = `Moles: ${(masa/masaMolar2).toFixed(3)} mol`;
+        break;
+
+      case "pureza":
+        let masaPura = parseFloat(document.getElementById("masaPura").value);
+        let masaMuestra = parseFloat(document.getElementById("masaMuestra").value);
+        let unidadPura = document.getElementById("unidadPura").value;
+        let unidadMuestra = document.getElementById("unidadMuestra").value;
+        if(unidadPura==="mg") masaPura/=1000;
+        if(unidadMuestra==="mg") masaMuestra/=1000;
+        if(!masaPura || !masaMuestra) throw "Completa todos los campos";
+        resultado = `Pureza: ${((masaPura/masaMuestra)*100).toFixed(2)} %`;
+        break;
+
+      case "titulacion":
+        let Vt = parseFloat(document.getElementById("Vt").value);
+        let unidadVt = document.getElementById("unidadVt").value;
+        if(unidadVt==="mL") Vt/=1000;
+        let Mt = parseFloat(document.getElementById("Mt").value);
+        let eqTitulacion = parseFloat(document.getElementById("eq").value);
+        if(!Vt || !Mt || !eqTitulacion) throw "Completa todos los campos";
+        let Ct = (Vt * Mt) / eqTitulacion;
+        resultado = `Concentración titulada: ${Ct.toFixed(3)} M`;
+        crearGraficaTitulacion(Vt*1000, Ct); // gráfico opcional
         break;
     }
 
     document.getElementById("resultado").innerText = resultado;
     agregarHistorial(resultado);
+
   } catch(e){
     alert(e);
   }
 }
 
-// Historial persistente
+// Historial
 function agregarHistorial(texto){
   let fecha = new Date().toLocaleString();
   historial.unshift(`${fecha}: ${texto}`);
@@ -217,11 +265,11 @@ function borrarHistorial(){
   renderHistorial();
 }
 
-// Gráfica para dilución
+// Gráficas
 function crearGraficaDilucion(C1,V1,C2,V2){
   if(grafica) grafica.destroy();
   let labels = ["Inicial","Final"];
-  let data = [C1,C2 || C1*V1/(V2 || 1)];
+  let data = [C1,C2 || (C1*V1/(V2||1))];
   grafica = new Chart(graficaCtx,{
     type:"bar",
     data:{
@@ -236,6 +284,25 @@ function crearGraficaDilucion(C1,V1,C2,V2){
       responsive:true,
       plugins:{legend:{display:false}}
     }
+  });
+}
+
+function crearGraficaTitulacion(V,C){
+  if(grafica) grafica.destroy();
+  grafica = new Chart(graficaCtx,{
+    type:"line",
+    data:{
+      labels:["Volumen agregado","Resultado"],
+      datasets:[{
+        label:"Concentración (M)",
+        data:[V,C],
+        backgroundColor:["#22c55e","#3b82f6"],
+        borderColor:"#22c55e",
+        fill:false,
+        tension:0.3
+      }]
+    },
+    options:{responsive:true}
   });
 }
 
