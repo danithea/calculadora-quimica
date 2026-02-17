@@ -2,12 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Calculadora de Química Analítica PRO</title>
+  <title>Calculadora de Química Analítica PRO MAX</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="container">
     <h1>Calculadora de Química Analítica</h1>
+
+    <button id="toggleTema">Cambiar Tema</button>
 
     <select id="tipoCalc" onchange="mostrarCampos()">
       <option value="molaridad">Molaridad</option>
@@ -25,16 +28,14 @@
 
     <h2 id="resultado"></h2>
 
+    <button onclick="borrarHistorial()">Borrar Historial</button>
+
     <h3>Historial de cálculos</h3>
-    <ul id="historial-list"></ul>
-    
-    <h3>Gráfica de Dilución / Titulación</h3>
-    <canvas id="grafica" width="350" height="200"></canvas>
+    <ul id="historial"></ul>
 
-    <button id="toggleTheme" onclick="cambiarTema()">Cambiar Tema.</button>
-
+    <canvas id="grafica" height="200"></canvas>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <script src="script.js"></script>
 </body>
 </html>
