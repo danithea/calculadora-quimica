@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Química Analítica PRO</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Química Analítica</h1>
+
+    <select id="tipoCalc" onchange="mostrarCampos()">
+      <option value="molaridad">Molaridad</option>
+      <option value="normalidad">Normalidad</option>
+      <option value="dilucion">Dilución</option>
+      <option value="masa">Masa</option>
+      <option value="moles">Moles</option>
+      <option value="pureza">Porcentaje de Pureza</option>
+      <option value="titulacion">Titulación Ácido/Base</option>
+    </select>
+
+    <div id="campos"></div>
+
+    <button onclick="calcular()">Calcular</button>
+
+    <h2 id="resultado"></h2>
+
+    <h3>Historial de cálculos</h3>
+    <ul id="historial-list"></ul>
+    
+    <h3>Gráfica de Dilución / Titulación</h3>
+    <canvas id="grafica" width="350" height="200"></canvas>
+
+    <button id="toggleTheme" onclick="cambiarTema()">Cambiar Tema.</button>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

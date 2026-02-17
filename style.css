@@ -1,0 +1,81 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background: #0f172a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 15px;
+  width: 400px;
+  box-shadow: 0 0 20px #0f172a;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+select, input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 15px 0;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #22c55e;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #16a34a;
+}
+
+ul {
+  background: #111827;
+  padding: 10px;
+  border-radius: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+li {
+  margin: 5px 0;
+  padding: 5px;
+  border-bottom: 1px solid #334155;
+}
+
+body.claro {
+  background: #f8fafc;
+  color: #111827;
+}
+
+body.claro .container {
+  background: #e2e8f0;
+  color: #111827;
+}
+
+body.claro button {
+  background: #3b82f6;
+}
+
+body.claro button:hover {
+  background: #2563eb;
+}
+
+body.claro ul {
+  background: #cbd5e1;
+  color: #111827;
+}
