@@ -1,11 +1,36 @@
 :root {
+  /* Tema Oscuro por defecto */
   --bg-color: #0f172a;
   --container-color: #1e293b;
-  --text-color: white;
+  --text-color: #ffffff;
+  --input-bg: #1f2937;
+  --input-border: #334155;
+  --input-color: #ffffff;
   --btn-color: #22c55e;
   --btn-hover: #16a34a;
+  --ul-bg: #111827;
+  --li-border: #334155;
+  --canvas-bg: #1e293b;
+  --shadow-color: rgba(0,0,0,0.5);
 }
 
+/* Variables para tema claro */
+[data-theme="claro"] {
+  --bg-color: #f5f5f5;
+  --container-color: #ffffff;
+  --text-color: #111827;
+  --input-bg: #f0f0f0;
+  --input-border: #cbd5e1;
+  --input-color: #111827;
+  --btn-color: #3b82f6;
+  --btn-hover: #2563eb;
+  --ul-bg: #e2e8f0;
+  --li-border: #cbd5e1;
+  --canvas-bg: #ffffff;
+  --shadow-color: rgba(0,0,0,0.2);
+}
+
+/* Body y contenedor principal */
 body {
   font-family: 'Arial', sans-serif;
   background: var(--bg-color);
@@ -13,6 +38,7 @@ body {
   display: flex;
   justify-content: center;
   padding: 20px;
+  transition: all 0.3s ease;
 }
 
 .container {
@@ -20,28 +46,32 @@ body {
   padding: 30px;
   border-radius: 15px;
   width: 450px;
-  box-shadow: 0 0 20px #0f172a;
+  box-shadow: 0 8px 20px var(--shadow-color);
+  transition: all 0.3s ease;
 }
 
+/* Titulos */
 h1, h2, h3 {
   text-align: center;
   margin-bottom: 15px;
+  transition: all 0.3s ease;
 }
 
-/* Todos los inputs y selects tienen mismo ancho y estilo */
+/* Inputs y selects */
 input[type="number"], select {
   width: 100%;
   padding: 12px 15px;
   margin: 8px 0 15px 0;
   border-radius: 8px;
-  border: 1px solid #334155;
+  border: 1px solid var(--input-border);
   font-size: 16px;
   box-sizing: border-box;
-  background-color: #f5f5f5;
-  color: #111827;
+  background-color: var(--input-bg);
+  color: var(--input-color);
+  transition: all 0.3s ease;
 }
 
-/* Botones igual de grandes que inputs y uniformes */
+/* Botones */
 button {
   width: 100%;
   padding: 12px 15px;
@@ -53,7 +83,7 @@ button {
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
   box-sizing: border-box;
 }
 
@@ -61,22 +91,42 @@ button:hover {
   background: var(--btn-hover);
 }
 
+/* Listas de historial */
 ul {
-  background: #111827;
+  background: var(--ul-bg);
   padding: 10px;
   border-radius: 10px;
   max-height: 200px;
   overflow-y: auto;
+  transition: all 0.3s ease;
 }
 
 li {
   margin: 5px 0;
   padding: 5px;
-  border-bottom: 1px solid #334155;
+  border-bottom: 1px solid var(--li-border);
+  transition: all 0.3s ease;
 }
 
+/* Canvas para gráficos */
 canvas {
   margin-top: 20px;
   border-radius: 10px;
-  background-color: #f5f5f5;
+  background-color: var(--canvas-bg);
+  transition: all 0.3s ease;
+}
+
+/* Scroll bonito para tema claro/oscuro */
+ul::-webkit-scrollbar {
+  width: 8px;
+}
+
+ul::-webkit-scrollbar-track {
+  background: var(--ul-bg);
+  border-radius: 10px;
+}
+
+ul::-webkit-scrollbar-thumb {
+  background-color: var(--btn-color);
+  border-radius: 10px;
 }
